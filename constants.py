@@ -1,0 +1,1 @@
+INITIAL_SEED_PATH = './inital_seeds.txt'
