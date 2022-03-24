@@ -4,7 +4,14 @@ import scrapy
 
 
 class Chief(scrapy.spiders.CrawlSpider):
+
     name = 'Chief'
+
+    custom_settings = {
+        'COOKIES_ENABLED': False,
+        'AJAXCRAWL_ENABLED': True,
+        'REDIRECT_MAX_TIMES': 10
+    }
 
     # def __init__(self):
     #     print('*'*100)
@@ -17,8 +24,10 @@ class Chief(scrapy.spiders.CrawlSpider):
                 line = line.strip()
 
                 # yield line
-            yield scrapy.Request(line)
+                yield scrapy.Request(line, callback=self.parse)
 
-    def parse(self, responce):
-        print(responce)
-
+    def parse(self, response):
+        self.logger.info(
+            'Got successful response from {}'.format(response.url))
+        print('*'*100)
+        print(response)
